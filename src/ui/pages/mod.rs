@@ -41,8 +41,11 @@ impl Page for HomePage {
 
         let db_state = self.db.read_db(
         ).change_context(PageError::DrawError)?;
-        for (id, epic) in db_state.epics.iter() {
-            println!("{}|{}|{}", id, epic.name, epic.status);
+        let keys = itertools::sorted(db_state.epics.keys());
+        for id in keys {
+            if let Some(epic) = db_state.epics.get(&id) {
+                println!("{}|{}|{}", id, epic.name, epic.status);
+            }
         }
 
         println!();
@@ -94,11 +97,13 @@ impl Page for EpicDetail {
         println!("     id     |               name               |      status      ");
 
         let stories = &db_state.stories;
-
-        for (id, story) in stories.iter() {
-            println!("{}|{}|{}", id, story.name, story.status);
+        let keys = itertools::sorted(stories.keys());
+        for id in keys {
+            if let Some(story) = db_state.stories.get(&id) {
+                println!("{}|{}|{}", id, story.name, story.status);
+            }
         }
-
+        
         println!();
         println!();
 
