@@ -3,7 +3,7 @@ use error_stack::{Context, IntoReport, Report, Result, ResultExt};
 use crate::models::{DBState, Epic, Story, Status};
 
 #[derive(Debug)]
-enum JiraDatabaseError {
+pub enum JiraDatabaseError {
     ReadError,
     WriteError,
     NoEpicWithIDError,
@@ -32,7 +32,7 @@ impl std::fmt::Display for JiraDatabaseError {
 impl std::error::Error for JiraDatabaseError {}
 
 pub struct JiraDatabase {
-    database: Box<dyn Database>
+    pub database: Box<dyn Database>
 }
 
 impl JiraDatabase {
@@ -172,7 +172,7 @@ impl JiraDatabase {
 }
 
 #[derive(Debug)]
-enum DatabaseError {
+pub enum DatabaseError {
     ReadError,
     WriteError,
 }
@@ -192,7 +192,7 @@ impl std::fmt::Display for DatabaseError {
 
 impl std::error::Error for DatabaseError {}
 
-trait Database {
+pub trait Database {
     fn read_db(&self) -> Result<DBState, DatabaseError>;
     fn write_db(&self, db_state: &DBState) -> Result<(), DatabaseError>;
 }
