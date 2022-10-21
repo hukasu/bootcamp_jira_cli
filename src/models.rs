@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Action {
-    NavigateToPreviousPage,
     CreateEpic,
     NavigateToEpicDetail{epic_id: u32},
     UpdateEpicStatus{epic_id: u32},
@@ -11,6 +10,7 @@ pub enum Action {
     NavigateToStoryDetail{epic_id: u32, story_id: u32},
     UpdateStoryStatus{story_id: u32},
     DeleteStory{epic_id: u32, story_id: u32},
+    NavigateToPreviousPage,
     Exit
 }
 
