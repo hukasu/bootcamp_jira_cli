@@ -45,7 +45,12 @@ impl Page for HomePage {
         let keys = itertools::sorted(db_state.epics.keys());
         for id in keys {
             if let Some(epic) = db_state.epics.get(&id) {
-                println!("{}|{}|{}", id, epic.name, epic.status);
+                println!(
+                    "{}|{}|{}",
+                    get_column_string(&id.to_string(), 12),
+                    get_column_string(&epic.name, 34),
+                    get_column_string(&epic.status.to_string(), 18),
+                );
             }
         }
 
@@ -94,18 +99,27 @@ impl Page for EpicDetail {
         println!("------------------------------ EPIC ------------------------------");
         println!("  id  |     name     |         description         |    status    ");
 
-        println!("{}|{}|{}|{}", self.epic_id, epic.name, epic.description, epic.status);
+        println!(
+            "{}|{}|{}|{}",
+            get_column_string(&self.epic_id.to_string(), 6),
+            get_column_string(&epic.name, 14),
+            get_column_string(&epic.description, 29),
+            get_column_string(&epic.status.to_string(), 14)
+        );
   
         println!();
 
         println!("---------------------------- STORIES ----------------------------");
         println!("     id     |               name               |      status      ");
 
-        let stories = &db_state.stories;
-        let keys = itertools::sorted(stories.keys());
-        for id in keys {
+        for id in itertools::sorted(epic.stories.iter()) {
             if let Some(story) = db_state.stories.get(&id) {
-                println!("{}|{}|{}", id, story.name, story.status);
+                println!(
+                    "{}|{}|{}",
+                    get_column_string(&id.to_string(), 12),
+                    get_column_string(&story.name, 34),
+                    get_column_string(&story.status.to_string(), 17)
+                );
             }
         }
         
@@ -159,7 +173,13 @@ impl Page for StoryDetail {
         println!("------------------------------ STORY ------------------------------");
         println!("  id  |     name     |         description         |    status    ");
         
-        println!("{}|{}|{}|{}", self.epic_id, story.name, story.description, story.status);
+        println!(
+            "{}|{}|{}|{}",
+            get_column_string(&self.story_id.to_string(), 6),
+            get_column_string(&story.name, 14),
+            get_column_string(&story.description, 29),
+            get_column_string(&story.status.to_string(), 15)
+        );
         
         println!();
         println!();
