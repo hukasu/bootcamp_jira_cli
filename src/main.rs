@@ -26,7 +26,7 @@ fn main() {
 
         if let Err(e) = cur_page.draw_page() {
             println!("{:?}", e);
-            let _ = get_user_input();
+            wait_for_key_press();
             continue;
         };
 
@@ -35,14 +35,14 @@ fn main() {
             Ok(Some(a)) => a,
             Err(e) => {
                 println!("{:?}", e);
-                let _ = get_user_input();
+                wait_for_key_press();
                 continue;
             }
             _ => continue,
         };
         if let Err(e) = navigator.handle_action(action) {
             println!("{:?}", e);
-            let _ = get_user_input();
+            wait_for_key_press();
         }
     }
 }
