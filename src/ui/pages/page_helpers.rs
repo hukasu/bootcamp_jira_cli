@@ -6,15 +6,13 @@ pub fn get_column_string(text: &str, width: usize) -> String {
         elp
     } else if width <= 3 {
         elp[3..].to_owned()
+    } else if text.len() <= width {
+        let padding_len = std::cmp::max(width - elp.len(), 0);
+        let padding_raw = vec![b' '; padding_len];
+        let padding = String::from_utf8_lossy(&padding_raw);
+        format!("{}{}", &elp, &padding)
     } else {
-        if text.len() <= width {
-            let padding_len = std::cmp::max(width - elp.len(), 0);
-            let padding_raw = vec![b' '; padding_len];
-            let padding = String::from_utf8_lossy(&padding_raw);
-            format!("{}{}", &elp, &padding)
-        } else {
-            format!("{}{}", &elp[..width-3], &elp[width..])
-        }
+        format!("{}{}", &elp[..width - 3], &elp[width..])
     }
 }
 
@@ -55,5 +53,5 @@ mod tests {
         assert_eq!(get_column_string(text2, width), "test  ".to_owned());
         assert_eq!(get_column_string(text3, width), "testme".to_owned());
         assert_eq!(get_column_string(text4, width), "tes...".to_owned());
-    } 
+    }
 }
